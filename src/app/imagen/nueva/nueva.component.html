@@ -1,0 +1,42 @@
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" 
+			 size="medium" 
+			 color="#fff" 
+			 type="square-jelly-box">
+	<p class="spinnerMensaje">Subiendo imagen...</p>
+</ngx-spinner>
+<div class="container animate__animated animate__zoomIn animate__faster 800ms">
+	<div class="row">
+		<div class="col-md-8 ml-auto mr-auto">
+			<form (ngSubmit)="onUpload()" novalidate enctype="multipart/form-data">
+				<div class="mb-3">
+					<input class="form-control" 
+							   id="imagen" 
+							   type="file" 
+							   #imagenInputFile
+							   (change)="onFileChange($event)"
+							   accept="image/png, image/jpeg, image/gif">
+				</div>
+				<div *ngIf="imagen" class="mt-5">
+					<h5>Vista previa:</h5>
+					<div class="mb-3">
+						<img class="img-thumbnail miniatura" [src]="imagenMin">
+					</div>
+				</div>
+				<div class="form-group d-flex justify-content-between">
+					<button type="submit" 
+							class="btn btn-outline-success" 
+							[disabled]="!imagen"
+							>
+						<i class="fas fa-upload"></i>Subir
+					</button>
+					<button type="submit" 
+							class="btn btn-outline-danger" 
+							[disabled]="!imagen"
+							(click)="reset()">
+						<i class="fas fa-sync-alt"></i>Eliminar
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
