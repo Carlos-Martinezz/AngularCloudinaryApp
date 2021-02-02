@@ -6,11 +6,11 @@
 </ngx-spinner>
 <div class="container">
     <div class="row">
-        <h2 class="mb-5 animate__animated animate__fadeInDown">Todas las imágenes</h2>
+        <h2 class="mb-5 animate__fadeInDown">Imágenes que tu has subido</h2>
         <div class="col-md-12 text-center animate__animated animate__fadeInUp animate__delay-1s" *ngIf="imagenes.length === 0">
             <div class="alert alert-dismissible alert-primary">
                 <h3>¡Vaya!</h3>
-                <h4>Parece que nadie ha subido imágenes. Intenta subir tu primera imagen <a routerLink="/nueva">Aquí</a></h4>
+                <h4>Parece que no has subido ninguna imagen aún. Intenta subir tu primera imagen <a routerLink="/nueva">Aquí</a></h4>
             </div>
         </div>
         <div class="col-md-4 animate__animated animate__zoomIn animate__faster 800ms" *ngFor="let imagen of imagenes; index as i">

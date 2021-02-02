@@ -3,27 +3,31 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Imagen } from 'src/app/models/imagen.model';
 import { ImagenService } from 'src/app/services/imagen.service';
+import { LoginService } from 'src/app/services/login.service';
 import { DetalleComponent } from '../detalle/detalle.component';
 
 @Component({
-	selector: 'app-lista',
-	templateUrl: './lista.component.html',
-	styleUrls: ['./lista.component.css']
+	selector: 'app-mi-lista',
+	templateUrl: './mi-lista.component.html',
+	styleUrls: ['./mi-lista.component.css']
 })
-export class ListaComponent implements OnInit {
+export class MiListaComponent implements OnInit {
 
 	public imagenes: Imagen[] = [];
 
 	constructor( private imagenService: ImagenService,
 				 private spinner: NgxSpinnerService,
-				 private modalService: NgbModal ) { }
+				 private modalService: NgbModal,
+				 private loginService: LoginService ) { 
+				
+	}
 
 	ngOnInit(): void {
 		this.cargarImagenes();
 	}
 
 	cargarImagenes() {
-		this.imagenService.list().subscribe(
+		this.imagenService.miList( this.loginService.getIdUsuario() ).subscribe(
 			data => {
 				this.imagenes = data;
 			}
@@ -44,10 +48,9 @@ export class ListaComponent implements OnInit {
 		)
 	}
 
-	abrirModal( i: number,  ): void {
+	abrirModal( i: number ): void {
 		const modalRef = this.modalService.open( DetalleComponent );
 		modalRef.componentInstance.index = i;
-		modalRef.componentInstance.miLista = true;
 	}
 
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ImagenService } from 'src/app/services/imagen.service';
 import { ElementRef } from '@angular/core';
+import { Alerts } from 'src/app/utils/alert.utils';
 
 @Component({
 	selector: 'app-nueva',
@@ -16,9 +17,9 @@ export class NuevaComponent implements OnInit {
 	public imagen: File;
 	public imagenMin: File;
 
-	constructor( private imagenService: ImagenService, 
-				 private router: Router,
-				 private spinner: NgxSpinnerService ) { 
+	constructor( private imagenService: ImagenService,
+				 private spinner: NgxSpinnerService,
+				 private alerts: Alerts ) { 
 
 	}
 
@@ -43,15 +44,17 @@ export class NuevaComponent implements OnInit {
 
 		this.spinner.show();
 
-		this.imagenService.upload( this.imagen ).subscribe( 
+		const idUsuario: string = localStorage.getItem("idApiToken");
+
+		this.imagenService.upload( this.imagen, idUsuario ).subscribe( 
 			data => {
 				this.spinner.hide();
-				alert( data.mensaje );
+				this.alerts.alerta("Hecho!", "Se subió la imagen.", 'success', 1000);
 				this.reset();
 			},
 			err => {
 				this.spinner.hide();
-				alert( err.error.mensaje || "Ha ocurrido un error" );
+				this.alerts.alerta("Error!", "No se subió la imagen.", 'error');
 				this.reset();
 			}
 		);

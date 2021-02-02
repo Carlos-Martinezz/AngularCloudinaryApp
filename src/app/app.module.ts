@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,15 +23,23 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   centeredSlides: true
 };
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './auth/login/login.component';
+import { LoginGuard } from './auth/login.guard';
+import { AuthorizationInterceptor } from './auth/authorization.interceptor';
+import { SigninComponent } from './auth/signin/signin.component';
+import { MiListaComponent } from './imagen/mi-lista/mi-lista.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListaComponent,
     NuevaComponent,
-    DetalleComponent
+    DetalleComponent,
+    LoginComponent,
+    SigninComponent,
+    MiListaComponent
   ],
   imports: [
     BrowserModule,
@@ -40,10 +49,17 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule,
     NgxSpinnerModule,
-    SwiperModule
+    SwiperModule,
+    ReactiveFormsModule
   ],
   entryComponents: [ DetalleComponent ],
   providers: [
+    LoginGuard,
+    {
+			provide: HTTP_INTERCEPTORS,
+			useClass: AuthorizationInterceptor,
+			multi: true
+		},
     {
       provide: SWIPER_CONFIG,
       useValue: DEFAULT_SWIPER_CONFIG

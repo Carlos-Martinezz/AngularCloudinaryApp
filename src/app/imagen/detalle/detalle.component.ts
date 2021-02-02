@@ -2,8 +2,9 @@ import { Input } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-import { Imagen } from 'src/app/models/imagen';
+import { Imagen } from 'src/app/models/imagen.model';
 import { ImagenService } from 'src/app/services/imagen.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
 	selector: 'app-detalle',
@@ -13,6 +14,7 @@ import { ImagenService } from 'src/app/services/imagen.service';
 export class DetalleComponent implements OnInit {
 
 	@Input() index: number;
+	@Input() miLista: boolean;
 	public imagenes: Imagen[];
 	
 	public config: SwiperConfigInterface = {
@@ -26,7 +28,8 @@ export class DetalleComponent implements OnInit {
 	};
 
 	constructor( public activeModal: NgbActiveModal,
-				 private imagenService: ImagenService ) { 
+				 private imagenService: ImagenService,
+				 private loginService: LoginService ) { 
 
 	}
 
@@ -34,10 +37,19 @@ export class DetalleComponent implements OnInit {
 		
 		this.config.initialSlide = this.index;
 
-		this.imagenService.list().subscribe(
-			data => this.imagenes = data,
-			err => console.log( err )
-		)
+		if( this.miLista ) {
+			this.imagenService.list().subscribe(
+				data => this.imagenes = data,
+				err => console.log( err )
+			)
+		} else {
+			this.imagenService.miList( this.loginService.getIdUsuario() ).subscribe(
+				data => this.imagenes = data,
+				err => console.log( err )
+			)
+		}
+
+		
 
 	}
 

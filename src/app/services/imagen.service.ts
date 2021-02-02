@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Imagen } from '../models/imagen';
+import { Imagen } from '../models/imagen.model';
+import { Alerts } from '../utils/alert.utils';
+
 
 @Injectable({
 	providedIn: 'root'
@@ -10,7 +12,8 @@ export class ImagenService {
 
 	private URL: string = 'http://localhost:8080/cloudinary/';
 
-	constructor( private http: HttpClient ) { 
+	constructor( private http: HttpClient,
+				 private alerts: Alerts ) { 
 
 	}
 
@@ -18,10 +21,15 @@ export class ImagenService {
 		return this.http.get<Imagen[]>(`${ this.URL }list`);
 	}
 
-	public upload( imagen: File ): Observable<any> {
+	public miList( idUsuario: string ): Observable<Imagen[]> {
+		return this.http.get<Imagen[]>(`${ this.URL }myList/${ idUsuario }`);
+	}
+
+	public upload( imagen: File, idUsuario: string ): Observable<any> {
 		
 		const formData = new FormData();
 		formData.append('multipartFile', imagen);
+		formData.append('idUsuario', idUsuario);
 		
 		return this.http.post<any>(`${ this.URL }upload`, formData);
 	}
