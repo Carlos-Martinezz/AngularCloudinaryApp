@@ -1,9 +1,9 @@
 <div class="container animate__animated animate__backInLeft">
     <div class="row">
-        <div class="col-md-5 col-xs-12 ml-auto mr-auto text-center">
+        <div class="col-md-4 col-xs-12 ml-auto mr-auto text-center">
             <form [formGroup]="formGroup" autocomplete="off">
                 <fieldset>
-                    <legend>Iniciar Sesión</legend>
+                    <h1><i class="fas fa-sign-in-alt fa-2x"></i></h1>
                     <br>
                     <br>
                     <div class="form-group">
@@ -28,7 +28,7 @@
                     </div>
                     <button type="button" (click)="enviar()" class="btn btn-primary btn-block">Entrar</button><br>
                     ó<br>
-                    <a type="button" routerLink="signin" class="btn btn-success btn-block mt-3">Regístrate</a>
+                    <a type="button" routerLink="/signin" class="btn btn-success btn-block mt-3">Regístrate</a>
                 </fieldset>
             </form>
         </div>

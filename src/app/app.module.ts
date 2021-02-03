@@ -30,6 +30,8 @@ import { LoginGuard } from './auth/login.guard';
 import { AuthorizationInterceptor } from './auth/authorization.interceptor';
 import { SigninComponent } from './auth/signin/signin.component';
 import { MiListaComponent } from './imagen/mi-lista/mi-lista.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { MiListaComponent } from './imagen/mi-lista/mi-lista.component';
     DetalleComponent,
     LoginComponent,
     SigninComponent,
-    MiListaComponent
+    MiListaComponent,
+    NotFoundComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,

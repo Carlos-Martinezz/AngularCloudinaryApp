@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
 	private buildForm() {
 
 		this.formGroup = this.formBuilder.group({
-			usuario: ["Maria", Validators.required],
-			contrasena: ["1234", Validators.required]
+			usuario: ["", Validators.required],
+			contrasena: ["", Validators.required]
 		});
 
 	}
